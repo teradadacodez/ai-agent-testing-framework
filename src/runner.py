@@ -1,0 +1,27 @@
+import time
+from src.agent import run_agent
+
+def run_tests(test_cases) : 
+    results = []
+    for test in test_cases : 
+        input_text = test["input"]
+        print(f"Running test case id = {test["id"]}.") # for logging
+
+        start_time = time.time()
+        try : 
+            output = run_agent(input_text)
+        except Exception as e : 
+            print(f"Error : {e}")
+            output = "ERROR"
+        llm_output = run_agent(input_text)
+        end_time = time.time() 
+
+        latency = end_time-start_time
+        results.append({
+                "input" : input_text,
+                "output" : llm_output,
+                "expected" : test["expected_behaviour"],
+                "category" : test["category"],
+                "latency" : latency
+            })
+    return results
