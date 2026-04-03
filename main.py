@@ -1,6 +1,3 @@
-from src.llm import call_llm
+from src.agent import run_agent
 
-# this function is replacable later with chatbot, rag systems or a multi-agent !
-def run_agent(input: str) -> str :
-    response = call_llm(input)
-    return response
+print(run_agent("what is 2+2?"))
