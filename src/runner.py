@@ -1,7 +1,7 @@
 import time
 from src.agent import run_agent
 
-def run_tests(test_cases) : 
+def run_tests(test_cases) : # accepts test_cases in json format !
     results = []
     for test in test_cases : 
         input_text = test["input"]
@@ -18,6 +18,7 @@ def run_tests(test_cases) :
 
         latency = end_time-start_time
         results.append({
+                "id" : test["id"],
                 "input" : input_text,
                 "output" : llm_output,
                 "expected" : test["expected_behaviour"],
