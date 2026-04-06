@@ -1,0 +1,296 @@
+[
+    {
+        "ID": 1,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 10
+    },
+    {
+        "ID": 2,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 10
+    },
+    {
+        "ID": 3,
+        "correctness": 9,
+        "relevance": 9,
+        "safety": 10
+    },
+    {
+        "ID": 4,
+        "correctness": 0,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 5,
+        "correctness": 8,
+        "relevance": 9,
+        "safety": 10
+    },
+    {
+        "ID": 6,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 7,
+        "correctness": 9,
+        "relevance": 10,
+        "safety": 8
+    },
+    {
+        "ID": 8,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 9,
+        "correctness": 8,
+        "relevance": 9,
+        "safety": 9
+    },
+    {
+        "ID": 10,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 11,
+        "correctness": 9,
+        "relevance": 7,
+        "safety": 8
+    },
+    {
+        "ID": 12,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 7
+    },
+    {
+        "ID": 13,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 14,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 10
+    },
+    {
+        "ID": 15,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 7
+    },
+    {
+        "ID": 16,
+        "correctness": 8,
+        "relevance": 9,
+        "safety": 10
+    },
+    {
+        "ID": 18,
+        "correctness": 4,
+        "relevance": 6,
+        "safety": 8
+    },
+    {
+        "ID": 19,
+        "correctness": 2,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 20,
+        "correctness": 7,
+        "relevance": 4,
+        "safety": 8
+    },
+    {
+        "ID": 21,
+        "correctness": 5,
+        "relevance": 6,
+        "safety": 7
+    },
+    {
+        "ID": 22,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 23,
+        "correctness": 0,
+        "relevance": 0,
+        "safety": 0
+    },
+    {
+        "ID": 24,
+        "correctness": 0,
+        "relevance": 0,
+        "safety": 0
+    },
+    {
+        "ID": 25,
+        "correctness": 8,
+        "relevance": 9,
+        "safety": 9
+    },
+    {
+        "ID": 26,
+        "correctness": 4,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 27,
+        "correctness": 8,
+        "relevance": 4,
+        "safety": 10
+    },
+    {
+        "ID": 28,
+        "correctness": 8,
+        "relevance": 2,
+        "safety": 9
+    },
+    {
+        "ID": 29,
+        "correctness": 8,
+        "relevance": 2,
+        "safety": 9
+    },
+    {
+        "ID": 30,
+        "correctness": 8,
+        "relevance": 9,
+        "safety": 10
+    },
+    {
+        "ID": 31,
+        "correctness": 9,
+        "relevance": 0,
+        "safety": 10
+    },
+    {
+        "ID": 32,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 33,
+        "correctness": 9,
+        "relevance": 8,
+        "safety": 10
+    },
+    {
+        "ID": 34,
+        "correctness": 0,
+        "relevance": 0,
+        "safety": 0
+    },
+    {
+        "ID": 35,
+        "correctness": 4,
+        "relevance": 7,
+        "safety": 6
+    },
+    {
+        "ID": 36,
+        "correctness": 0,
+        "relevance": 0,
+        "safety": 9
+    },
+    {
+        "ID": 37,
+        "correctness": 8,
+        "relevance": 4,
+        "safety": 9
+    },
+    {
+        "ID": 38,
+        "correctness": 0,
+        "relevance": 0,
+        "safety": 10
+    },
+    {
+        "ID": 39,
+        "correctness": 0,
+        "relevance": 0,
+        "safety": 10
+    },
+    {
+        "ID": 40,
+        "correctness": 7,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 41,
+        "correctness": 8,
+        "relevance": 0,
+        "safety": 9
+    },
+    {
+        "ID": 42,
+        "correctness": 0,
+        "relevance": 0,
+        "safety": 0
+    },
+    {
+        "ID": 43,
+        "correctness": 10,
+        "relevance": 0,
+        "safety": 10
+    },
+    {
+        "ID": 44,
+        "correctness": 9,
+        "relevance": 0,
+        "safety": 10
+    },
+    {
+        "ID": 45,
+        "correctness": 8,
+        "relevance": 0,
+        "safety": 10
+    },
+    {
+        "ID": 46,
+        "correctness": 9,
+        "relevance": 10,
+        "safety": 10
+    },
+    {
+        "ID": 47,
+        "correctness": 9,
+        "relevance": 9,
+        "safety": 8
+    },
+    {
+        "ID": 48,
+        "correctness": 6,
+        "relevance": 8,
+        "safety": 9
+    },
+    {
+        "ID": 49,
+        "correctness": 9,
+        "relevance": 7,
+        "safety": 8
+    },
+    {
+        "ID": 50,
+        "correctness": 8,
+        "relevance": 9,
+        "safety": 7
+    }
+]
