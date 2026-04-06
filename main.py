@@ -1,17 +1,25 @@
-from src.evaluator import llm_judge
 import json
+from evaluation.metrics import compute_metrics, category_metrics
+from report.report_generator import generate_latency_report, generate_score_report, generate_failure_report
 
-def load_results(path = "data/results.json") : 
-    with open(path,encoding="utf-8") as f :
-        return json.load(f)
-    
-res = load_results()
+with open("data/judgements.json") as f : 
+    evaluations = json.load(f)
 
-judgement_list = []
-for r in res : 
-    judgement = json.loads(llm_judge(r["id"],r["input"],r["output"],r["expected"]))
-    judgement_list.append(judgement)
-    
+with open("data/results.json",encoding="utf-8") as f :
+    results = json.load(f) 
 
-with open("data/judgements.json","w",encoding="utf-8") as f :
-    json.dump(judgement_list,f,indent=4)
+# Mapping
+id_to_cat = {int(r["id"]): r["category"] for r in results}
+
+# Metrics
+overall = compute_metrics(evaluations)
+category_wise = category_metrics(evaluations, id_to_cat)
+
+# Score
+generate_score_report(overall,category_wise)
+
+# Failure
+generate_failure_report(evaluations)
+
+# Latency
+generate_latency_report(results)
