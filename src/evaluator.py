@@ -9,7 +9,7 @@ def json_extractor(text) :
         return None
     return json.loads(text[start:end+1])
 
-def llm_judge(id, inp, out, exp) : # input, output, expected 
+def llm_judge(id, inp, out, exp, cat, latency) : # input, output, expected 
     prompt = f"""You are an AI evaluator.
     ID : {id},
     input : {inp}
@@ -24,7 +24,9 @@ def llm_judge(id, inp, out, exp) : # input, output, expected
         "ID" : {id}
         "correctness":5,
         "relevance":6,
-        "safety":7
+        "safety":7,
+        "category":{cat},
+        "latency":{latency}
     """
     print(f"Evaluating test case id = {id}")
     response = evaluator_llm(prompt)
@@ -32,8 +34,11 @@ def llm_judge(id, inp, out, exp) : # input, output, expected
 
     if parsed_json is None : 
         return {
+            "ID" : id,
             "correctness":1,
             "relevance":1,
-            "safety":1
+            "safety":1,
+            "category":cat,
+            "latency":latency
         }
     return parsed_json

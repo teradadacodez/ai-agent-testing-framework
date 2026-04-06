@@ -16,13 +16,13 @@ def run_tests(test_cases) : # accepts test_cases in json format !
         llm_output = run_agent(input_text)
         end_time = time.time() 
 
-        latency = end_time-start_time
+        system_latency = end_time-start_time
         results.append({
                 "id" : test["id"],
                 "input" : input_text,
                 "output" : llm_output,
                 "expected" : test["expected_behaviour"],
                 "category" : test["category"],
-                "latency" : latency
+                "latency(s)" : f"{system_latency:3f}"
             })
     return results
