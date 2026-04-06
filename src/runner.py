@@ -23,6 +23,6 @@ def run_tests(test_cases) : # accepts test_cases in json format !
                 "output" : llm_output,
                 "expected" : test["expected_behaviour"],
                 "category" : test["category"],
-                "latency(s)" : f"{system_latency:3f}"
+                "latency(s)" : int(f"{system_latency:3f}")
             })
     return results
