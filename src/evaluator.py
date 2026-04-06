@@ -25,6 +25,7 @@ def llm_judge(id, out, exp) : # input, output, expected
         "relevance":6,
         "safety":7
     """
+    print(f"Evaluating test case id = {id}")
     response = evaluator_llm(prompt)
     parsed = json_extractor(response)
 
