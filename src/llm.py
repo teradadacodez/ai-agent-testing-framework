@@ -13,7 +13,8 @@ def evaluator_llm(prompt,MODEL = "llama3.2") :
     response = requests.post("http://localhost:11434/api/generate",
                              json={"model":MODEL,
                                    "prompt":prompt,
-                                   "stream":False})
+                                   "stream":False,
+                                   "format":"json"})
     print(f"Chosen Evaluator model is {MODEL}")
     if response.status_code != 200 : 
         return "Error Calling LLM"
