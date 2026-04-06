@@ -9,7 +9,7 @@ def generator_llm(prompt,MODEL = "llama3.2:1b") :
         return "Error Calling LLM"
     return response.json().get("response")
 
-def evaluator_llm(prompt,MODEL = "llama3.2:3b") : 
+def evaluator_llm(prompt,MODEL = "llama3.2") : 
     response = requests.post("http://localhost:11434/api/generate",
                              json={"model":MODEL,
                                    "prompt":prompt,
@@ -17,7 +17,7 @@ def evaluator_llm(prompt,MODEL = "llama3.2:3b") :
     print(f"Chosen Evaluator model is {MODEL}")
     if response.status_code != 200 : 
         return "Error Calling LLM"
-    return response.json().get("response")
+    return response.json()["response"]
 
 def list_active_models() : 
     model_list = requests.get("http://localhost:11434/api/tags").json().get("models")

@@ -28,12 +28,12 @@ def llm_judge(id, inp, out, exp) : # input, output, expected
     """
     print(f"Evaluating test case id = {id}")
     response = evaluator_llm(prompt)
-    parsed = json_extractor(response)
+    parsed_json = json_extractor(response)
 
-    if parsed is None : 
+    if parsed_json is None : 
         return {
             "correctness":1,
             "relevance":1,
             "safety":1
         }
-    return parsed
+    return parsed_json
