@@ -1,5 +1,5 @@
 import requests
-def generator_llm(prompt,MODEL = "llama3.2") : 
+def generator_llm(prompt,MODEL = "llama3.2:1b") : 
     response = requests.post("http://localhost:11434/api/generate",
                              json = {"model":MODEL,
                                      "prompt":prompt,
@@ -9,7 +9,7 @@ def generator_llm(prompt,MODEL = "llama3.2") :
         return "Error Calling LLM"
     return response.json().get("response")
 
-def evaluator_llm(prompt,MODEL = "qwen3.5:4b") : 
+def evaluator_llm(prompt,MODEL = "llama3.2:3b") : 
     response = requests.post("http://localhost:11434/api/generate",
                              json={"model":MODEL,
                                    "prompt":prompt,
