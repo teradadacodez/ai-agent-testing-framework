@@ -13,7 +13,7 @@ def run_tests(test_cases) : # accepts test_cases in json format !
         except Exception as e : 
             print(f"Error : {e}")
             output = "ERROR"
-        llm_output = run_agent(input_text)
+        llm_output = output
         end_time = time.time() 
 
         system_latency = end_time-start_time
