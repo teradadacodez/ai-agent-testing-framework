@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Testing Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+
+        /* Overall Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-progress {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .metric-progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        /* Colors for metrics */
+        .color-accuracy { color: #3b82f6; }
+        .bg-accuracy { background: #3b82f6; }
+        
+        .color-relevance { color: #8b5cf6; }
+        .bg-relevance { background: #8b5cf6; }
+        
+        .color-safety { color: #10b981; }
+        .bg-safety { background: #10b981; }
+        
+        .color-average { color: #f59e0b; }
+        .bg-average { background: #f59e0b; }
+
+        /* Category Performance Section */
+        .section {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #cbd5e1;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #0f172a;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            background: white;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .category-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e293b;
+            text-transform: capitalize;
+        }
+
+        .category-metrics {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .category-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        .category-metric-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .category-metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Timing Stats */
+        .timing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .timing-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .timing-card:hover {
+            background: white;
+            border-color: #8b5cf6;
+            transform: translateY(-2px);
+        }
+
+        .timing-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .timing-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: #8b5cf6;
+        }
+
+        .timing-unit {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-left: 0.25rem;
+        }
+
+        /* Failure Rate */
+        .failure-card {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .failure-card:hover {
+            background: #fee2e2;
+            border-color: #fca5a5;
+        }
+
+        .failure-label {
+            font-size: 1rem;
+            color: #991b1b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .failure-value {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: #dc2626;
+        }
+
+        /* Charts */
+        .chart-container {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #0f172a;
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            font-size: 1.2rem;
+            color: #64748b;
+        }
+
+        /* Error State */
+        .error {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            color: #991b1b;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .category-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Agent Testing Dashboard</h1>
+            <p class="subtitle">Performance Analysis & Metrics</p>
+        </header>
+
+        <div id="loading" class="loading">Loading dashboard data...</div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="dashboard-content" style="display: none;">
+            
+            <!-- Overall Metrics -->
+            <div class="metrics-grid" id="overall-metrics">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Failure Rate -->
+            <div id="failure-section">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Category Performance -->
+            <div class="section">
+                <h2 class="section-title">Category Performance</h2>
+                <div class="category-grid" id="category-performance">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="chart-container">
+                <h3 class="chart-title">Category Scores Comparison</h3>
+                <canvas id="categoryChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Overall Metrics Distribution</h3>
+                <canvas id="overallChart"></canvas>
+            </div>
+
+            <!-- Timing Statistics -->
+            <div class="section">
+                <h2 class="section-title">Response Time Statistics</h2>
+                <div class="timing-grid" id="timing-stats">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let dashboardData = null;
+
+        // Load dashboard data from JSON file
+        async function loadDashboardData() {
+            try {
+                const response = await fetch('../data/dashboard.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                // Parse the array structure from your JSON format
+                dashboardData = {
+                    overall: data[0].overall,
+                    category: data[1].category,
+                    failure: data[2].failure,
+                    latency: data[3].latency
+                };
+                
+                console.log('✅ Loaded dashboard data:', dashboardData);
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+                
+                renderDashboard();
+                
+            } catch (error) {
+                console.error('❌ Error loading dashboard data:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').innerHTML = `
+                    <h3>Failed to load dashboard data</h3>
+                    <p>${error.message}</p>
+                    <p>Please ensure <code>data/dashboard.json</code> exists and is valid JSON.</p>
+                `;
+            }
+        }
+
+        // Render the entire dashboard
+        function renderDashboard() {
+            renderOverallMetrics();
+            renderFailureRate();
+            renderCategoryPerformance();
+            renderTimingStats();
+            renderCharts();
+        }
+
+        // Render overall metrics cards
+        function renderOverallMetrics() {
+            const container = document.getElementById('overall-metrics');
+            const metrics = [
+                { label: 'Accuracy Score', key: 'accuracy_score', color: 'accuracy' },
+                { label: 'Relevance Score', key: 'relevance_score', color: 'relevance' },
+                { label: 'Safety Score', key: 'safety_score', color: 'safety' },
+                { label: 'Average Score', key: 'avg_score', color: 'average' }
+            ];
+
+            metrics.forEach(metric => {
+                const value = dashboardData.overall[metric.key];
+                const percentage = (value * 100).toFixed(1);
+                
+                const card = document.createElement('div');
+                card.className = 'metric-card';
+                card.innerHTML = `
+                    <div class="metric-label">${metric.label}</div>
+                    <div class="metric-value color-${metric.color}">${percentage}%</div>
+                    <div class="metric-progress">
+                        <div class="metric-progress-bar bg-${metric.color}" style="width: 0%"></div>
+                    </div>
+                `;
+                container.appendChild(card);
+                
+                // Animate progress bar
+                setTimeout(() => {
+                    card.querySelector('.metric-progress-bar').style.width = percentage + '%';
+                }, 100);
+            });
+        }
+
+        // Render failure rate
+        function renderFailureRate() {
+            const container = document.getElementById('failure-section');
+            const failureRate = dashboardData.failure.failure_rate.toFixed(1);
+            
+            container.innerHTML = `
+                <div class="failure-card">
+                    <div class="failure-label">Failure Rate</div>
+                    <div class="failure-value">${failureRate}%</div>
+                </div>
+            `;
+        }
+
+        // Render category performance cards
+        function renderCategoryPerformance() {
+            const container = document.getElementById('category-performance');
+            const categories = dashboardData.category;
+
+            for (const [catName, catData] of Object.entries(categories)) {
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                
+                card.innerHTML = `
+                    <div class="category-name">${catName}</div>
+                    <div class="category-metrics">
+                        <div class="category-metric">
+                            <span class="category-metric-label">Accuracy</span>
+                            <span class="category-metric-value color-accuracy">${(catData.accuracy_score * 100).toFixed(1)}%</span>
+                        </div>
+                        <div class="category-metric">
+                            <span class="category-metric-label">Relevance</span>
+                            <span class="category-metric-value color-relevance">${(catData.relevance_score * 100).toFixed(1)}%</span>
+                        </div>
+                        <div class="category-metric">
+                            <span class="category-metric-label">Safety</span>
+                            <span class="category-metric-value color-safety">${(catData.safety_score * 100).toFixed(1)}%</span>
+                        </div>
+                        <div class="category-metric">
+                            <span class="category-metric-label">Average</span>
+                            <span class="category-metric-value color-average">${(catData.avg_score * 100).toFixed(1)}%</span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            }
+        }
+
+        // Render timing statistics
+        function renderTimingStats() {
+            const container = document.getElementById('timing-stats');
+            const timings = [
+                { label: 'Mean', value: dashboardData.latency.mean },
+                { label: 'Mode', value: dashboardData.latency.mode },
+                { label: 'Maximum', value: dashboardData.latency.max },
+                { label: 'Minimum', value: dashboardData.latency.min }
+            ];
+
+            timings.forEach(timing => {
+                const card = document.createElement('div');
+                card.className = 'timing-card';
+                card.innerHTML = `
+                    <div class="timing-label">${timing.label}</div>
+                    <div class="timing-value">${timing.value.toFixed(2)}<span class="timing-unit">s</span></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Render charts
+        function renderCharts() {
+            renderCategoryChart();
+            renderOverallChart();
+        }
+
+        // Category scores comparison chart
+        function renderCategoryChart() {
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            const categories = Object.keys(dashboardData.category);
+            
+            const datasets = [
+                {
+                    label: 'Accuracy',
+                    data: categories.map(cat => dashboardData.category[cat].accuracy_score * 100),
+                    backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                    borderColor: 'rgb(59, 130, 246)',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Relevance',
+                    data: categories.map(cat => dashboardData.category[cat].relevance_score * 100),
+                    backgroundColor: 'rgba(139, 92, 246, 0.7)',
+                    borderColor: 'rgb(139, 92, 246)',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Safety',
+                    data: categories.map(cat => dashboardData.category[cat].safety_score * 100),
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                    borderColor: 'rgb(16, 185, 129)',
+                    borderWidth: 2
+                }
+            ];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: categories.map(c => c.charAt(0).toUpperCase() + c.slice(1)),
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: { font: { family: 'Inter', size: 12 } }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) { return value + '%'; },
+                                font: { family: 'Inter' }
+                            }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Inter' } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Overall metrics chart
+        function renderOverallChart() {
+            const ctx = document.getElementById('overallChart').getContext('2d');
+            const overall = dashboardData.overall;
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Accuracy', 'Relevance', 'Safety'],
+                    datasets: [{
+                        data: [
+                            overall.accuracy_score * 100,
+                            overall.relevance_score * 100,
+                            overall.safety_score * 100
+                        ],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.7)',
+                            'rgba(139, 92, 246, 0.7)',
+                            'rgba(16, 185, 129, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(59, 130, 246)',
+                            'rgb(139, 92, 246)',
+                            'rgb(16, 185, 129)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: { 
+                                font: { family: 'Inter', size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed.toFixed(1) + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load data when page loads
+        window.addEventListener('load', loadDashboardData);
+    </script>
+</body>
+</html>
