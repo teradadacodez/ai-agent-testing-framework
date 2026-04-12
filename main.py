@@ -5,12 +5,19 @@ from src.runner import run_tests
 from src.evaluator import llm_judge
 from report.report_generator import display_failure_report, display_score_report, display_latency_report, generate_json_report 
 from evaluation.metrics import compute_overall_metrics, compute_category_metrics
+from evaluation.rule_based import rule_based_check
 
 with open("data/test_cases.json", encoding="utf-8") as f : 
     test_cases = json.load(f)
 
 results = run_tests(test_cases)
 
+checks = []
+for res in results : 
+    checks.append(rule_based_check(res))
+with open("data/rule_based.json","w",encoding="utf-8") as f :
+    json.dump(checks,f,indent=4)
+    
 with open("data/results.json","w",encoding="utf-8") as f :
     json.dump(results,f,indent=4)
 
