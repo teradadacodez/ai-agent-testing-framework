@@ -51,7 +51,8 @@ def display_latency_report(results, set_return = False) :
 
     mode_dict = {}
     for lt in latencies : 
-        mode_dict[lt] += 1
+        key = str(lt)
+        mode_dict[key] = mode_dict.get(key,0)+1 # can use defaultdict (like map<*,*> of c++) 
     mode = max(mode_dict,key=mode_dict.get)
     if set_return == False :
         print("-"*5,"Latency report","-"*5)
