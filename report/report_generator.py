@@ -1,3 +1,4 @@
+from evaluation.metrics import compute_category_metrics, compute_overall_metrics
 def display_score_report(overall, category_wise, set_return = False) : 
     if set_return == False : 
         print("-"*5,"Score report","-"*5)
@@ -53,7 +54,7 @@ def display_latency_report(results, set_return = False) :
     for lt in latencies : 
         key = str(lt)
         mode_dict[key] = mode_dict.get(key,0)+1 # can use defaultdict (like map<*,*> of c++) 
-    mode = max(mode_dict,key=mode_dict.get)
+    mode = float(max(mode_dict,key=mode_dict.get))
     if set_return == False :
         print("-"*5,"Latency report","-"*5)
         print(f"Mean System Latency = {mean}")
@@ -70,12 +71,13 @@ def display_latency_report(results, set_return = False) :
 
 def generate_json_report(judgements, results) : 
     import json
-    overall, category = display_score_report(judgements,results,set_return=True)
+    overall = compute_overall_metrics(judgements)
+    category = compute_category_metrics(judgements,results)
+    overall, category = display_score_report(overall,category,set_return=True)
     dash = [
         {"overall": overall},
         {"category": category},
         {"failure": display_failure_report(judgements,set_return=True)},
         {"latency": display_latency_report(results,set_return=True)}
     ]
-    with open("data/dashboard.json","w",encoding="utf-8") as f :
-        json.dump(dash,f,indent=4)
+    return dash
