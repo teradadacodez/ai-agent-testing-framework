@@ -41,7 +41,7 @@ def display_failure_report(judgements, set_return = False) :
         print(f"Failure percentage = {len(failures)*100/len(judgements):.2f}%")
         print("-"*19)
     else : 
-        return {"failure_rate":len(failures)*100/len(judgements)}
+        return {"failure_rate":int(f"len(failures)*100/len(judgements):.2f")}
 
 def display_latency_report(results, set_return = False) : 
     latencies = [r["latency(s)"] for r in results]
