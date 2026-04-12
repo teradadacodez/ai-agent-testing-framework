@@ -2,3 +2,4 @@
 .env
 tmp.py
 **/config.py
+experimental_features/

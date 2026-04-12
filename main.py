@@ -1,25 +1,32 @@
+# full pipeline
+
 import json
-from evaluation.metrics import compute_metrics, category_metrics
-from report.report_generator import generate_latency_report, generate_score_report, generate_failure_report
+from src.runner import run_tests
+from src.evaluator import llm_judge
+from report.report_generator import display_failure_report, display_score_report, display_latency_report, generate_json_report 
+from evaluation.metrics import compute_overall_metrics, compute_category_metrics
 
-with open("data/judgements.json") as f : 
-    evaluations = json.load(f)
+with open("data/test_cases.json", encoding="utf-8") as f : 
+    test_cases = json.load(f)
 
-with open("data/results.json",encoding="utf-8") as f :
-    results = json.load(f) 
+results = run_tests(test_cases)
 
-# Mapping
-id_to_cat = {int(r["id"]): r["category"] for r in results}
+with open("data/results.json","w",encoding="utf-8") as f :
+    json.dump(results,f,indent=4)
 
-# Metrics
-overall = compute_metrics(evaluations)
-category_wise = category_metrics(evaluations, id_to_cat)
+judgements = [llm_judge(res) for res in results]
 
-# Score
-generate_score_report(overall,category_wise)
+with open("data/judgements.json","w",encoding="utf-8") as f :
+    json.dump(judgements,f,indent=4)
 
-# Failure
-generate_failure_report(evaluations)
+overall = compute_overall_metrics(judgements)
+category = compute_category_metrics(judgements,results)
 
-# Latency
-generate_latency_report(results)
+display_score_report(overall,category)
+display_failure_report(judgements)
+display_latency_report(results)
+
+dashboard = generate_json_report(judgements,results)
+
+with open("data/dashboard.json","w",encoding="utf-8") as f :
+    json.dump(dashboard,f,indent=4)

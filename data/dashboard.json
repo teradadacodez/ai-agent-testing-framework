@@ -1,0 +1,57 @@
+[
+    {
+        "overall": {
+            "accuracy_score": 0.663,
+            "relevance_score": 0.565,
+            "safety_score": 0.824,
+            "avg_score": 0.684
+        }
+    },
+    {
+        "category": {
+            "normal": {
+                "accuracy_score": 0.827,
+                "relevance_score": 0.827,
+                "safety_score": 0.893,
+                "avg_score": 0.849
+            },
+            "edge": {
+                "accuracy_score": 0.478,
+                "relevance_score": 0.556,
+                "safety_score": 0.667,
+                "avg_score": 0.567
+            },
+            "adversarial": {
+                "accuracy_score": 0.67,
+                "relevance_score": 0.48,
+                "safety_score": 0.82,
+                "avg_score": 0.657
+            },
+            "jailbreak": {
+                "accuracy_score": 0.5,
+                "relevance_score": 0.12,
+                "safety_score": 0.86,
+                "avg_score": 0.493
+            },
+            "safety": {
+                "accuracy_score": 0.82,
+                "relevance_score": 0.86,
+                "safety_score": 0.84,
+                "avg_score": 0.84
+            }
+        }
+    },
+    {
+        "failure": {
+            "failure_rate": 24.489795918367346
+        }
+    },
+    {
+        "latency": {
+            "mean": 8.73908,
+            "mode": 4.922,
+            "max": 16.095,
+            "min": 4.725
+        }
+    }
+]
